@@ -11,16 +11,17 @@ sequenceDiagram
     participant DuckDB engine
     participant Example extension
 
-    DuckDB user->>DuckDB engine: LOAD example.duckdb_extension
-    DuckDB engine->>Example extension: LOAD
+    DuckDB user->>DuckDB engine: INSTALL example.duckdb_extension;
+    DuckDB engine->>Example extension: INSTALL
     Example extension->>DuckDB engine: duckdb_library_version()
-     Note over Example extension,DuckDB engine: ensure the library is compatible with current engine
+    Note over Example extension,DuckDB engine: ensure the library is compatible with current engine
 
+    DuckDB user->>DuckDB engine: LOAD example;
     DuckDB engine->>Example extension: request extension init
     Example extension->>DuckDB engine: example_extension_init()
     Note over Example extension,DuckDB engine: initialize extension provided functions
 
-    DuckDB user->>DuckDB engine: SELECT * FROM example_function()
+    DuckDB user->>DuckDB engine: SELECT * FROM example_function();
     Note over DuckDB user,DuckDB engine: example_function is a table function
 
     DuckDB engine->>Example extension: request example_function bind
